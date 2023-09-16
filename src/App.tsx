@@ -1,24 +1,33 @@
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import './App.css'
-import Main from './components/Main/Main'
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import "./App.css";
+import Main from "./components/Main/Main";
+import RecipesList from "./components/RecipesList/RecipesList";
+import FavoriteRecipes from "./components/FavoriteRecipes/FavoriteREcipes";
 
-const routes = createBrowserRouter([
+const routes = createBrowserRouter(
+  [
+    {
+      path: "/",
+      element: <Main />,
+      children: [
+        {
+          path: "/",
+          element: <RecipesList />,
+        },
+        {
+          path: "favorite",
+          element: <FavoriteRecipes />,
+        },
+      ],
+    },
+  ],
   {
-    path: "/",
-    element: <Main/>,
-    children: [
-      {
-        path: "/",
-        element: <div className="">hello</div>
-      }
-    ]
+    basename: "/",
   }
-])
+);
 
 function App() {
-  return (
-    <RouterProvider router={routes}/>
-  )
+  return <RouterProvider router={routes} />;
 }
 
-export default App
+export default App;

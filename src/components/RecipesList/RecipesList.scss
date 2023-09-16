@@ -1,0 +1,44 @@
+.recipes-sider {
+  $self: &;
+  position: relative;
+  height: 100%;
+  background-color: #fff !important;
+  padding-top: 10px;
+  padding-right: 2px;
+  padding-left: 10px;
+
+  &-filters {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    #{$self}-ingredients {
+      max-height: 250px;
+      overflow: auto;
+    }
+
+    #{$self}-radio-group {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+
+    #{$self}-rate-slider  {
+      width: 100%;
+
+      .ant-space-item:nth-child(2) {
+        flex-grow: 1;
+      }
+    }
+  }
+
+
+  &-accept-button {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+ 
+}
