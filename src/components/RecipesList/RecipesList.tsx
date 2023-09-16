@@ -12,8 +12,8 @@ import {
   Space,
   Typography
 } from "antd";
-
 import "./RecipesList.scss";
+import RecipesTable from "./RecipesTable";
 
 const {Text} = Typography;
 
@@ -70,7 +70,7 @@ const RecipesList = () => {
       </Sider>
       <Divider type="vertical" style={{ height: "100%" }} />
       <Content>
-        
+        <RecipesTable/>
       </Content>
     </>
   );

@@ -12,9 +12,6 @@ const CBHeader = () => {
 
   return (
     <Header className="header-container">
-      {/* <Space className="header-container-search">
-        <Input.Search placeholder="Поиск" className="header-container-search-input"/>
-      </Space> */}
       {!isAuthorized && <AuthButtons/>}
       {isAuthorized && <UserActionButtons/>}
     </Header>

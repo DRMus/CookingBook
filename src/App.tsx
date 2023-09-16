@@ -2,7 +2,8 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./App.css";
 import Main from "./components/Main/Main";
 import RecipesList from "./components/RecipesList/RecipesList";
-import FavoriteRecipes from "./components/FavoriteRecipes/FavoriteREcipes";
+import FavoriteRecipes from "./components/FavoriteRecipes/FavoriteRecipes";
+import Recipe from "./components/Recipe/Recipe";
 
 const routes = createBrowserRouter(
   [
@@ -18,6 +19,7 @@ const routes = createBrowserRouter(
           path: "favorite",
           element: <FavoriteRecipes />,
         },
+        { path: "recipe", element: <Recipe /> },
       ],
     },
   ],
