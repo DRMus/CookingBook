@@ -1,0 +1,38 @@
+.recipe-page {
+  $self: &;
+  padding: 25px 15%;
+
+  &-main-content {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 15px;
+
+    &-title {
+      width: fit-content;
+      position: relative;
+    }
+
+    #{$self}-like {
+      font-size: 18px;
+      position: absolute;
+      left: 105%;
+      top: 50%;
+      color: #afafaf;
+      transform: translateY(-30%);
+      transition: color 300ms;
+      cursor: pointer;
+
+      &:hover {
+        color: #ff7875;
+      }
+    }
+
+    #{$self}-image {
+      margin-top: 40px;
+    }
+  }
+}
+
+.liked {
+  color: #ff4d4f;
+}
