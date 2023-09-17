@@ -15,6 +15,7 @@ import {
 } from "antd";
 import "./RecipesList.scss";
 import RecipesTable from "./RecipesTable";
+import { useState } from "react";
 
 const { Text } = Typography;
 
@@ -37,7 +38,7 @@ const items: CollapseProps["items"] = [
     key: "2",
     label: "Сложность приготовления",
     children: (
-      <Space className="recipes-sider-rate-slider" >
+      <Space className="recipes-sider-rate-slider">
         <Text>1</Text>
         <Form.Item name="rate" initialValue={[1, 5]}>
           <Slider min={1} max={5} range />
@@ -64,9 +65,20 @@ const items: CollapseProps["items"] = [
 ];
 
 const RecipesList = () => {
+  const [isSiderBrokeen, setIsSiderBrokeen] = useState(false);
+
+  const onBreakpoint = (brokeen: boolean) => {
+    setIsSiderBrokeen(brokeen);
+  };
   return (
     <>
-      <Sider className="recipes-sider" width={250}>
+      <Sider
+        className="recipes-sider"
+        width={250}
+        collapsedWidth={0}
+        breakpoint="lg"
+        onBreakpoint={onBreakpoint}
+      >
         <Form onFinish={(e) => console.log(e)}>
           <div className="recipes-sider-filters">
             <Form.Item name="search">
@@ -81,7 +93,7 @@ const RecipesList = () => {
           </Form.Item>
         </Form>
       </Sider>
-      <Divider type="vertical" style={{ height: "100%" }} />
+      {!isSiderBrokeen && <Divider type="vertical" style={{ height: "100%" }} />}
       <Content>
         <RecipesTable />
       </Content>

@@ -5,6 +5,7 @@ import RecipesList from "./components/RecipesList/RecipesList";
 import FavoriteRecipes from "./components/FavoriteRecipes/FavoriteRecipes";
 import Recipe from "./components/Recipe/Recipe";
 import SignInPage from "./components/AuthPage/SignInPage";
+import SignUpPage from "./components/AuthPage/SignUpPage";
 
 const routes = createBrowserRouter(
   [
@@ -26,7 +27,11 @@ const routes = createBrowserRouter(
     {
       path: "login",
       element: <SignInPage/>
-    }
+    },
+    {
+      path: "registration",
+      element: <SignUpPage/>
+    },
   ],
   {
     basename: "/",
