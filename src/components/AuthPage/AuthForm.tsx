@@ -4,6 +4,7 @@ import { AntFormFieldsFailed, AuthFormValues } from "../../interfaces";
 import Title from "antd/es/typography/Title";
 
 import "./AuthForm.scss";
+import { useEffect } from "react";
 
 interface Props {
   title: string;
@@ -13,7 +14,13 @@ interface Props {
   onFinishFailed: (value: AntFormFieldsFailed<AuthFormValues>) => void;
 }
 
-const AuthForm = ({ buttonLabel, onFinish, onFinishFailed, redirectLink, title }: Props) => {
+const AuthForm = ({
+  buttonLabel,
+  onFinish,
+  onFinishFailed,
+  redirectLink,
+  title,
+}: Props) => {
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -21,13 +28,33 @@ const AuthForm = ({ buttonLabel, onFinish, onFinishFailed, redirectLink, title }
     navigate(location.state);
   };
 
+  useEffect(() => {
+    const postData = JSON.stringify({
+      username: "hey",
+      password: "1234",
+    });
+    fetch("//localhost:3100/create", {
+      method: "POST",
+      body: postData,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((value) => console.log(value));
+  }, []);
+
   return (
     <Layout className="login-page-main">
       <section className="login-page-content">
         <div className="login-page-content-title">
           <Title level={3}>{title}</Title>
         </div>
-        <Form layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form
+          layout="vertical"
+          onFinish={onFinish}
+          onFinishFailed={onFinishFailed}
+        >
           <Form.Item
             name="username"
             label="Логин"
@@ -58,7 +85,11 @@ const AuthForm = ({ buttonLabel, onFinish, onFinishFailed, redirectLink, title }
             </Form.Item>
           </Space>
 
-          <Space className="login-page-content-link" align="center" direction="vertical">
+          <Space
+            className="login-page-content-link"
+            align="center"
+            direction="vertical"
+          >
             <Link to={redirectLink.to} state={location.state}>
               {redirectLink.label}
             </Link>

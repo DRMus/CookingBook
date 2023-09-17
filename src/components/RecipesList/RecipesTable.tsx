@@ -4,6 +4,7 @@ import { ColumnsType } from "antd/es/table";
 import "./RecipesTable.scss";
 import { useNavigate } from "react-router";
 import { FireFilled } from "@ant-design/icons";
+import classNames from "classnames";
 
 interface TableData {
   key: string;
@@ -42,7 +43,9 @@ const columns: ColumnsType<TableData> = [
     key: "difficulty",
     title: "Сложность",
     dataIndex: "difficulty",
-    render: (value, _, idx) => <Rate key={idx} disabled value={value} character={<FireFilled />} />,
+    render: (value, _, idx) => (
+      <Rate key={idx} disabled value={value} character={<FireFilled />} />
+    ),
   },
 ];
 
@@ -93,7 +96,11 @@ const testData: TableData[] = [
   },
 ];
 
-const RecipesTable = () => {
+interface Props {
+  isSiderBrokeen: boolean;
+}
+
+const RecipesTable = ({ isSiderBrokeen }: Props) => {
   const navigate = useNavigate();
 
   const onRowSelect = (rowData: TableData, rowIndex: number | undefined) => {
@@ -110,7 +117,9 @@ const RecipesTable = () => {
       columns={columns}
       dataSource={testData}
       pagination={{ pageSize: 11, position: ["bottomCenter"] }}
-      className="recipes-table"
+      className={classNames("recipes-table", {
+        "add-padding-left": isSiderBrokeen,
+      })}
       tableLayout="fixed"
       rowClassName="recipes-table-row"
       onRow={onRowSelect}

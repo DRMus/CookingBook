@@ -16,6 +16,7 @@ import {
 import "./RecipesList.scss";
 import RecipesTable from "./RecipesTable";
 import { useState } from "react";
+import classNames from "classnames";
 
 const { Text } = Typography;
 
@@ -65,27 +66,35 @@ const items: CollapseProps["items"] = [
 ];
 
 const RecipesList = () => {
-  const [isSiderBrokeen, setIsSiderBrokeen] = useState(false);
+  const [isSiderBrokeen, setIsSiderBrokeen] = useState<boolean>(false);
+  const [isCollapsed, setIsCollapsed] = useState<boolean>(false);
 
   const onBreakpoint = (brokeen: boolean) => {
     setIsSiderBrokeen(brokeen);
   };
+
   return (
     <>
       <Sider
-        className="recipes-sider"
+        className={classNames("recipes-sider", {
+          "absolute-sider": isSiderBrokeen,
+          "delete-padding": isCollapsed,
+          "add-padding-right": isSiderBrokeen && !isCollapsed,
+        })}
         width={250}
         collapsedWidth={0}
         breakpoint="lg"
         onBreakpoint={onBreakpoint}
+        onCollapse={setIsCollapsed}
       >
-        <Form onFinish={(e) => console.log(e)}>
+        <Form onFinish={(e) => console.log(e)} className="recipes-sider-form">
           <div className="recipes-sider-filters">
             <Form.Item name="search">
               <Input placeholder="Поиск" size="large" />
             </Form.Item>
             <Collapse items={items} />
           </div>
+
           <Form.Item className="recipes-sider-accept-button">
             <Button type="primary" size="large" htmlType="submit">
               Применить
@@ -93,9 +102,13 @@ const RecipesList = () => {
           </Form.Item>
         </Form>
       </Sider>
-      {!isSiderBrokeen && <Divider type="vertical" style={{ height: "100%" }} />}
+
+      {!isSiderBrokeen && (
+        <Divider type="vertical" style={{ height: "100%" }} />
+      )}
+
       <Content>
-        <RecipesTable />
+        <RecipesTable isSiderBrokeen={isSiderBrokeen} />
       </Content>
     </>
   );
