@@ -4,6 +4,7 @@ import Main from "./components/Main/Main";
 import RecipesList from "./components/RecipesList/RecipesList";
 import FavoriteRecipes from "./components/FavoriteRecipes/FavoriteRecipes";
 import Recipe from "./components/Recipe/Recipe";
+import SignInPage from "./components/AuthPage/SignInPage";
 
 const routes = createBrowserRouter(
   [
@@ -22,6 +23,10 @@ const routes = createBrowserRouter(
         { path: "recipe", element: <Recipe /> },
       ],
     },
+    {
+      path: "login",
+      element: <SignInPage/>
+    }
   ],
   {
     basename: "/",

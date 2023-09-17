@@ -3,6 +3,7 @@ import { ColumnsType } from "antd/es/table";
 
 import "./RecipesTable.scss";
 import { useNavigate } from "react-router";
+import { FireFilled } from "@ant-design/icons";
 
 interface TableData {
   key: string;
@@ -41,7 +42,7 @@ const columns: ColumnsType<TableData> = [
     key: "difficulty",
     title: "Сложность",
     dataIndex: "difficulty",
-    render: (value, _, idx) => <Rate key={idx} disabled value={value} />,
+    render: (value, _, idx) => <Rate key={idx} disabled value={value} character={<FireFilled />} />,
   },
 ];
 
@@ -93,13 +94,12 @@ const testData: TableData[] = [
 ];
 
 const RecipesTable = () => {
-
   const navigate = useNavigate();
 
   const onRowSelect = (rowData: TableData, rowIndex: number | undefined) => {
     return {
       onClick: () => {
-        navigate(`recipe?id=${rowData.key}`)
+        navigate(`recipe?id=${rowData.key}`);
       },
     };
   };

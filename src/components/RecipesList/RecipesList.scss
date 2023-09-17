@@ -13,6 +13,9 @@
     gap: 20px;
 
     #{$self}-ingredients {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
       max-height: 250px;
       overflow: auto;
     }
@@ -23,8 +26,7 @@
       gap: 10px;
     }
 
-
-    #{$self}-rate-slider  {
+    #{$self}-rate-slider {
       width: 100%;
 
       .ant-space-item:nth-child(2) {
@@ -33,13 +35,14 @@
     }
   }
 
-
   &-accept-button {
     position: absolute;
     bottom: 10px;
     left: 50%;
     transform: translateX(-50%);
     width: 70%;
+    & button {
+      width: 100%;
+    }
   }
- 
 }

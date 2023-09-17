@@ -1,6 +1,6 @@
 .recipe-page {
   $self: &;
-  padding: 25px 15%;
+  padding: 50px 15%;
 
   &-main-content {
     display: grid;
@@ -27,8 +27,17 @@
       }
     }
 
+    #{$self}-rate {
+      margin: 0;
+
+      & > li {
+        margin-inline: 0 !important;
+        margin-inline-end: 8px !important;
+      }
+    }
+
     #{$self}-image {
-      margin-top: 40px;
+      margin-top: 20px;
     }
   }
 }

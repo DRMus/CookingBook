@@ -4,16 +4,20 @@ import AuthButtons from "./AuthButtons";
 
 import "./CBHeader.scss";
 import UserActionButtons from "./UserActionButtons";
-
+import Title from "antd/es/typography/Title";
 
 const CBHeader = () => {
-
-  const [isAuthorized, setIsAuthorized] = useState<boolean>(true);
+  const [isAuthorized, setIsAuthorized] = useState<boolean>(false);
 
   return (
     <Header className="header-container">
-      {!isAuthorized && <AuthButtons/>}
-      {isAuthorized && <UserActionButtons/>}
+      <div className="header-container-title">
+        <Title level={2} className="header-container-title-text">
+          Cooking Book
+        </Title>
+      </div>
+      {!isAuthorized && <AuthButtons />}
+      {isAuthorized && <UserActionButtons />}
     </Header>
   );
 };
