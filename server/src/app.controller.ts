@@ -1,8 +1,10 @@
 import { Body, Controller, Get, Post, Req } from '@nestjs/common';
 import { AppService } from './app.service';
-import { CreateUser } from './dto/CreateUser';
+import { CreateUser, CreateUserResponse } from './dto/CreateUser';
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 
-@Controller()
+@ApiTags("Пользователи")
+@Controller("api")
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
@@ -11,6 +13,7 @@ export class AppController {
     return this.appService.getHello();
   }
   
+  @ApiResponse({status: 200, type: CreateUserResponse})
   @Post("create")
   async create(@Body() dto: CreateUser) {
 
