@@ -11,11 +11,14 @@
   },
   "dependencies": {
     "@ant-design/icons": "^5.2.6",
+    "@reduxjs/toolkit": "^1.9.5",
+    "@types/react-redux": "^7.1.26",
     "antd": "^5.9.1",
     "classnames": "^2.3.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-quill": "^2.0.0",
+    "react-redux": "^8.1.2",
     "react-router": "^6.16.0",
     "react-router-dom": "^6.16.0",
     "sass": "^1.67.0"
