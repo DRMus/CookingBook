@@ -4,7 +4,6 @@ import { AntFormFieldsFailed, AuthFormValues } from "../../interfaces";
 import Title from "antd/es/typography/Title";
 
 import "./AuthForm.scss";
-import { useEffect } from "react";
 
 interface Props {
   title: string;
@@ -27,22 +26,6 @@ const AuthForm = ({
   const goBack = () => {
     navigate(location.state);
   };
-
-  useEffect(() => {
-    const postData = JSON.stringify({
-      username: "hey",
-      password: "1234",
-    });
-    fetch("//localhost:3100/create", {
-      method: "POST",
-      body: postData,
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => res.json())
-      .then((value) => console.log(value));
-  }, []);
 
   return (
     <Layout className="login-page-main">

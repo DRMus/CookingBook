@@ -10,9 +10,9 @@ export class CreateUser {
   likes: string;
 }
 
-export class CreateUserResponse {
+export class UserResponse {
   @ApiProperty()
-  id: string;
+  id: number;
 
   @ApiProperty()
   username: string;
@@ -24,5 +24,5 @@ export class CreateUserResponse {
   likes: string;
   
   @ApiProperty()
-  created_at: string;
+  created_at: Date;
 }
