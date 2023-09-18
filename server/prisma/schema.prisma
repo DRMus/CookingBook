@@ -22,8 +22,9 @@ model User {
 model Recipe {
   id      Int @id @default(autoincrement())
   user    User? @relation(fields: [userId], references: [id])
-  userId  Int?
-  likes   Int
+  userId  Int
+  likes   Int 
+  title   String
   description String?
   cooking_order String
   difficulty Int
@@ -40,5 +41,5 @@ model Ingredient {
 model AlternateIngredient {
   id Int @id @default(autoincrement())
   ingredient_id Int
-  alternate_ingredient_id Int
+  name String
 }

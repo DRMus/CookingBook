@@ -4,21 +4,22 @@ CREATE TABLE "User" (
     "username" TEXT NOT NULL,
     "password" TEXT NOT NULL,
     "likes" TEXT NOT NULL,
-    "created_at" DATETIME NOT NULL
+    "created_at" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
 -- CreateTable
 CREATE TABLE "Recipe" (
     "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-    "userId" INTEGER,
+    "userId" INTEGER NOT NULL,
     "likes" INTEGER NOT NULL,
-    "description" TEXT NOT NULL,
+    "title" TEXT NOT NULL,
+    "description" TEXT,
     "cooking_order" TEXT NOT NULL,
     "difficulty" INTEGER NOT NULL,
     "ingredients" TEXT NOT NULL,
-    "image" TEXT NOT NULL,
-    "created_at" DATETIME NOT NULL,
-    CONSTRAINT "Recipe_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User" ("id") ON DELETE SET NULL ON UPDATE CASCADE
+    "image" TEXT,
+    "created_at" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT "Recipe_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
 -- CreateTable
@@ -31,5 +32,8 @@ CREATE TABLE "Ingredient" (
 CREATE TABLE "AlternateIngredient" (
     "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     "ingredient_id" INTEGER NOT NULL,
-    "alternate_ingredient_id" INTEGER NOT NULL
+    "name" TEXT NOT NULL
 );
+
+-- CreateIndex
+CREATE UNIQUE INDEX "User_username_key" ON "User"("username");
