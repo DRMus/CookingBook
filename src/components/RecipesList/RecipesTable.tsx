@@ -5,14 +5,15 @@ import "./RecipesTable.scss";
 import { useNavigate } from "react-router";
 import { FireFilled } from "@ant-design/icons";
 import classNames from "classnames";
+import {
+  useAppDispatch,
+  useAppSelector,
+} from "../../utils/hooks/useAppDispatch";
+import { useEffect, useState } from "react";
+import { fetchRecipes } from "../../redux/reducers/ActionCreators";
+import { TableData } from "../../interfaces";
+import { makeRecipesListForTable } from "../../utils/makeRecipesListForTable";
 
-interface TableData {
-  key: string;
-  title: string;
-  ingredients: string[];
-  likes: number;
-  difficulty: number;
-}
 
 const columns: ColumnsType<TableData> = [
   {
@@ -49,53 +50,6 @@ const columns: ColumnsType<TableData> = [
   },
 ];
 
-const testData: TableData[] = [
-  {
-    key: "1",
-    difficulty: 3,
-    ingredients: [
-      "Лук",
-      "Соль",
-      "Сахар",
-      "Лук",
-      "Соль",
-      "Сахар",
-      "Лук",
-      "Соль",
-      "Сахар",
-      "Лук",
-      "Соль",
-      "Сахар",
-      "Лук",
-      "Соль",
-      "Сахар",
-    ],
-    likes: 4,
-    title: "Луковый угар",
-  },
-  {
-    key: "2",
-    difficulty: 3,
-    ingredients: ["Лук", "Соль", "Сахар"],
-    likes: 4,
-    title: "Луковый угар",
-  },
-  {
-    key: "3",
-    difficulty: 3,
-    ingredients: ["Лук", "Соль", "Сахар"],
-    likes: 4,
-    title: "Луковый угар",
-  },
-  {
-    key: "4",
-    difficulty: 3,
-    ingredients: ["Лук", "Соль", "Сахар"],
-    likes: 4,
-    title: "Луковый угар",
-  },
-];
-
 interface Props {
   isSiderBrokeen: boolean;
 }
@@ -103,7 +57,12 @@ interface Props {
 const RecipesTable = ({ isSiderBrokeen }: Props) => {
   const navigate = useNavigate();
 
-  const onRowSelect = (rowData: TableData, rowIndex: number | undefined) => {
+  const dispatch = useAppDispatch();
+  const { recipesList, isLoading, error } = useAppSelector((state) => state.recipesReducer);
+
+  const [formatedRecipesList, setFormatedRecipesList] = useState<TableData[]>([]);
+
+  const onRowSelect = (rowData: TableData) => {
     return {
       onClick: () => {
         navigate(`recipe?id=${rowData.key}`);
@@ -111,11 +70,19 @@ const RecipesTable = ({ isSiderBrokeen }: Props) => {
     };
   };
 
+  useEffect(() => {
+    dispatch(fetchRecipes());
+  }, []);
+
+  useEffect(() => {
+    setFormatedRecipesList(makeRecipesListForTable(recipesList));
+  }, [recipesList])
   return (
     <Table
       bordered
       columns={columns}
-      dataSource={testData}
+      loading={isLoading}
+      dataSource={formatedRecipesList}
       pagination={{ pageSize: 11, position: ["bottomCenter"] }}
       className={classNames("recipes-table", {
         "add-padding-left": isSiderBrokeen,

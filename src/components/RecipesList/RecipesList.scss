@@ -18,6 +18,10 @@
     flex-direction: column;
     gap: 20px;
 
+    .ant-form-item {
+      margin-bottom: 0 !important;
+    }
+
     #{$self}-ingredients {
       display: flex;
       flex-direction: column;

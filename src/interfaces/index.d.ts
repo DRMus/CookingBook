@@ -13,3 +13,17 @@ export interface AuthFormValues {
   username: string,
   password: string
 }
+
+export interface FetchingDataTemplate {
+  id: number,
+  created_at: Date
+}
+
+export interface TableData {
+  key: string;
+  title: string;
+  ingredients: string[];
+  likes: number;
+  difficulty: number;
+}
+

@@ -57,7 +57,7 @@ export class IngredientsService {
       const altIngredient = alternateIngredientsDto.find(
         (item) => ingredientsDto[i].id === item.ingredient_id,
       );
-      
+
       if (altIngredient) {
         await this.saveAlternateIngredients(ingredient.id, altIngredient.names);
       }
@@ -75,7 +75,6 @@ export class IngredientsService {
 
     for (let i = 0; i < length; i++) {
       const ingredient = await this.getIngredient(+splitedIngredients[i]);
-      console.log(ingredient);
       const altIngredients = await this.getAlternateIngredients(ingredient.id);
 
       ingredientsArray.push(ingredient);
@@ -88,5 +87,14 @@ export class IngredientsService {
       ingredients: ingredientsArray,
       alternate_ingredients: altIngredientsArray,
     };
+  }
+
+  async getAllIngredients() {
+    const result = await this.databaseService.ingredient.findMany();
+    const filtredIngredients = result.filter((item, index) => {
+      return result.findIndex((foundIngredient) => foundIngredient.name === item.name) === index
+    })
+    
+    return filtredIngredients
   }
 }

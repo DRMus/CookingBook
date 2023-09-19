@@ -64,7 +64,7 @@ export class RecipesService {
   }
 
   async getAllRecipes() {
-    const recipes = await this.databaseService.recipe.findMany();
+    const recipes = await this.databaseService.recipe.findMany({include: {user: true}});
     const res = [];
     const length = recipes.length;
 

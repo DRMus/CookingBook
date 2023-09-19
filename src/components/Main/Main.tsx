@@ -14,7 +14,7 @@ const Main = () => {
 
       <Content className="main-layout-container">
         <Layout className="container-layout" hasSider>
-          <Outlet/>
+          <Outlet />
         </Layout>
       </Content>
 

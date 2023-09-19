@@ -9,16 +9,18 @@ interface Props {
   title: string;
   redirectLink: { to: string; label: string };
   buttonLabel: string;
+  isLoading: boolean;
   onFinish: (value: AuthFormValues) => void;
   onFinishFailed: (value: AntFormFieldsFailed<AuthFormValues>) => void;
 }
 
 const AuthForm = ({
   buttonLabel,
-  onFinish,
-  onFinishFailed,
+  isLoading,
   redirectLink,
   title,
+  onFinish,
+  onFinishFailed,
 }: Props) => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -33,11 +35,7 @@ const AuthForm = ({
         <div className="login-page-content-title">
           <Title level={3}>{title}</Title>
         </div>
-        <Form
-          layout="vertical"
-          onFinish={onFinish}
-          onFinishFailed={onFinishFailed}
-        >
+        <Form layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
           <Form.Item
             name="username"
             label="Логин"
@@ -62,17 +60,13 @@ const AuthForm = ({
               </Button>
             </Form.Item>
             <Form.Item className="login-page-content-buttons-item">
-              <Button size="large" htmlType="button" onClick={goBack}>
+              <Button size="large" htmlType="button" onClick={goBack} loading={isLoading}>
                 Назад
               </Button>
             </Form.Item>
           </Space>
 
-          <Space
-            className="login-page-content-link"
-            align="center"
-            direction="vertical"
-          >
+          <Space className="login-page-content-link" align="center" direction="vertical">
             <Link to={redirectLink.to} state={location.state}>
               {redirectLink.label}
             </Link>
