@@ -64,7 +64,9 @@ export class RecipesService {
   }
 
   async getAllRecipes() {
-    const recipes = await this.databaseService.recipe.findMany({include: {user: true}});
+    const recipes = await this.databaseService.recipe.findMany({
+      include: { user: { select: { id: true, username: true } } },
+    });
     const res = [];
     const length = recipes.length;
 
@@ -81,6 +83,11 @@ export class RecipesService {
   async getOneRecipe(id: number) {
     const recipe = await this.databaseService.recipe.findFirst({
       where: { id },
+      include: {
+        user: {
+          select: { id: true, username: true },
+        },
+      },
     });
 
     if (!recipe) {

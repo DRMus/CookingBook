@@ -10,7 +10,7 @@ import { useAppSelector } from "../../../utils/hooks/useAppDispatch";
 const CBHeader = () => {
   const navigate = useNavigate();
 
-  const { isAuthorizated } = useAppSelector((state) => state.authReducer);
+  const { isAuthorized } = useAppSelector((state) => state.authReducer);
 
   const goToHomePage = () => {
     navigate("/");
@@ -23,8 +23,8 @@ const CBHeader = () => {
           Cooking Book
         </Title>
       </div>
-      {!isAuthorizated && <AuthButtons />}
-      {isAuthorizated && <UserActionButtons />}
+      {!isAuthorized && <AuthButtons />}
+      {isAuthorized && <UserActionButtons />}
     </Header>
   );
 };

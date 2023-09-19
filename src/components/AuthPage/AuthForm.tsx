@@ -55,12 +55,12 @@ const AuthForm = ({
 
           <Space className="login-page-content-buttons" direction="vertical">
             <Form.Item className="login-page-content-buttons-item">
-              <Button type="primary" size="large" htmlType="submit">
+              <Button type="primary" size="large" htmlType="submit" loading={isLoading}>
                 {buttonLabel}
               </Button>
             </Form.Item>
             <Form.Item className="login-page-content-buttons-item">
-              <Button size="large" htmlType="button" onClick={goBack} loading={isLoading}>
+              <Button size="large" htmlType="button" onClick={goBack} >
                 Назад
               </Button>
             </Form.Item>

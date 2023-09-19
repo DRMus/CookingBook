@@ -27,3 +27,14 @@ export interface TableData {
   difficulty: number;
 }
 
+export interface ITagAltIngredients {
+  id: number;
+  names: string[];
+}
+
+export interface ITagIngredient {
+  id: number,
+  name: string,
+  altInredients?: ITagAltIngredients
+}
+

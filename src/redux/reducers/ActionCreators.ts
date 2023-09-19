@@ -6,6 +6,8 @@ import { authSlice } from "./AuthSlice";
 import { ingredientsSlice } from "./IngredientsSlice";
 import { recipesSlice } from "./RecipesSlice";
 import Cookies from "js-cookie";
+import { selectedRecipeSlice } from "./SelectedRecipeSlice";
+import { AxiosError } from "axios";
 
 export const fetchRecipes = () => async (dispatch: AppDispatch) => {
   try {
@@ -37,7 +39,7 @@ export const registrateUser = (data: AuthFormValues) => async (dispatch: AppDisp
     Cookies.set("token", token, { expires: new Date().setHours(5) });
     dispatch(authSlice.actions.authSuccess(token));
   } catch (e: any) {
-    dispatch(authSlice.actions.authFailed(e.message));
+    dispatch(authSlice.actions.authFailed(e.response.data.message));
   }
 };
 
@@ -51,7 +53,7 @@ export const loginUser = (data: AuthFormValues) => async (dispatch: AppDispatch)
     Cookies.set("token", token, { expires: new Date().setHours(5) });
     dispatch(authSlice.actions.authSuccess(token));
   } catch (e: any) {
-    dispatch(authSlice.actions.authFailed(e.message));
+    dispatch(authSlice.actions.authFailed(e.response.data.message));
   }
 };
 
@@ -76,3 +78,13 @@ export const verifyUser = () => async (dispatch: AppDispatch) => {
     dispatch(authSlice.actions.authNotAuthorizated());
   }
 };
+
+export const fetchOneRecipe = (id: number) => async (dispatch: AppDispatch) => {
+  try {
+    dispatch(selectedRecipeSlice.actions.recipeFetching());
+    const response = await axios.get<IRecipe>(`/recipes/${id}`);
+    dispatch(selectedRecipeSlice.actions.recipeFetchingSuccess(response.data));
+  } catch (e: any) {
+    dispatch(selectedRecipeSlice.actions.recipeFetchingFailed(e.message));
+  }
+}

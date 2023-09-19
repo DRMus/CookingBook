@@ -4,11 +4,13 @@ import { AuthFormValues, AntFormFieldsFailed } from "../../interfaces";
 import { registrateUser } from "../../redux/reducers/ActionCreators";
 import { useAppDispatch, useAppSelector } from "../../utils/hooks/useAppDispatch";
 import AuthForm from "./AuthForm";
+import { message } from "antd";
+import { authSlice } from "../../redux/reducers/AuthSlice";
 
 const SignUpPage = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { isAuthorizated, isLoading, error } = useAppSelector(
+  const { isAuthorized, isLoading, error } = useAppSelector(
     (state) => state.authReducer
   );
 
@@ -26,10 +28,18 @@ const SignUpPage = () => {
   };
 
   useEffect(() => {
-    if (isAuthorizated) {
+    if (isAuthorized) {
       redirectToHomePage();
     }
-  }, [isAuthorizated]);
+  }, [isAuthorized]);
+
+  useEffect(() => {
+    if (error && !isLoading) {
+      message.error(error);
+
+      dispatch(authSlice.actions.authNotAuthorizated());
+    }
+  }, [error, isLoading]);
   return (
     <AuthForm
       isLoading={isLoading}

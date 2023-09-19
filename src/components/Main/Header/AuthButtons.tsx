@@ -1,17 +1,18 @@
 import { Space, Button } from "antd";
 import "./CBHeader.scss";
-import { useLocation, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
+import { usePathLocation } from "../../../utils/hooks/usePathLocation";
 
 const AuthButtons = () => {
   const navigate = useNavigate();
-  const location = useLocation();
+  const pathLocation = usePathLocation();
 
   const toSignIn = () => {
-    navigate("/login", { state: location.pathname + location.search });
+    navigate("/login", { state: pathLocation });
   };
 
   const toSignUp = () => {
-    navigate("/registration", { state: location.pathname + location.search });
+    navigate("/registration", { state: pathLocation });
   };
 
   return (

@@ -1,19 +1,18 @@
 import Sider from "antd/es/layout/Sider";
 import { Content } from "antd/es/layout/layout";
-import { Button, Collapse, Divider, Form, Input } from "antd";
+import { Button, Collapse, Divider, Form, Input, Space } from "antd";
 import "./RecipesList.scss";
 import RecipesTable from "./RecipesTable";
 import { useEffect, useState } from "react";
 import classNames from "classnames";
-import {
-  useAppDispatch,
-  useAppSelector,
-} from "../../utils/hooks/useAppDispatch";
+import { useAppDispatch, useAppSelector } from "../../utils/hooks/useAppDispatch";
 import { fetchIngredients } from "../../redux/reducers/ActionCreators";
 import { recipesFilterItems } from "./RecipesFilterItems";
+import AddRecipeButton from "./AddRecipeButton";
 
 const RecipesList = () => {
   const dispatch = useAppDispatch();
+  const { isAuthorized } = useAppSelector((state) => state.authReducer);
   const { ingredientsList, isLoading } = useAppSelector(
     (state) => state.ingredientsReducer
   );
@@ -75,11 +74,10 @@ const RecipesList = () => {
         </Form>
       </Sider>
 
-      {!isSiderBrokeen && (
-        <Divider type="vertical" style={{ height: "100%" }} />
-      )}
+      {!isSiderBrokeen && <Divider type="vertical" style={{ height: "100%" }} />}
 
       <Content>
+        {isAuthorized && <AddRecipeButton />}
         <RecipesTable isSiderBrokeen={isSiderBrokeen} />
       </Content>
     </>

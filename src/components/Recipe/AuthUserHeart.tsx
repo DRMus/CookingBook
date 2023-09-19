@@ -1,5 +1,6 @@
 import { HeartOutlined, HeartFilled } from "@ant-design/icons";
 import { useState } from "react";
+import "./Recipe.scss"
 
 const AuthUserHeart = () => {
   const [isLiked, setIsLiked] = useState<boolean>(false);
