@@ -1,13 +1,30 @@
-import { Button, Space } from "antd"
+import { Button, Space } from "antd";
 
-import "./AddRecipeButton.scss"
+import "./AddRecipeButton.scss";
+import CreateRecipeModal from "./CreateRecipeModal/CreateRecipeModal";
+import { useState } from "react";
 
 const AddRecipeButton = () => {
-  return (
-    <Space className="add-recipe-container">
-      <Button type="primary">Создать рецепт</Button>
-    </Space>
-  )
-}
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
-export default AddRecipeButton
+  const changeModalState = (state: boolean) => {
+    setIsModalOpen(state);
+  };
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  return (
+    <>
+      <Space className="add-recipe-container">
+        <Button type="primary" onClick={openModal}>
+          Создать рецепт
+        </Button>
+      </Space>
+      <CreateRecipeModal isModalOpen={isModalOpen} changeModalState={changeModalState} />
+    </>
+  );
+};
+
+export default AddRecipeButton;
