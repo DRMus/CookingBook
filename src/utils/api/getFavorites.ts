@@ -2,6 +2,7 @@ import { message } from "antd";
 import axios from "../../core/axios";
 import { IRecipe } from "../../interfaces/IRecipe";
 
+/** Получение избранных рецптов пользователя */
 export async function getFavorites(userId: number, token: string) {
   try {
     const favorites = await axios.get<IRecipe[]>(`/users/favorites/${userId}`, {

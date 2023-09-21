@@ -1,6 +1,7 @@
 import { message } from "antd";
 import axios from "../../core/axios";
 
+/** Обновление данных рецепта */
 export async function updateRecipe(id: number, dto: FormData) {
   try {
     return await axios.post<boolean>(`/recipes/update/${id}`, dto, {

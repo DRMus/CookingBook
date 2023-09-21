@@ -2,8 +2,8 @@ import { Space } from "antd";
 import { BookOutlined, HeartOutlined, LogoutOutlined } from "@ant-design/icons";
 import ClickableIcon from "../../ui/ClickableIcon";
 import { useAppDispatch } from "../../../utils/hooks/useAppDispatch";
-import { logoutUser } from "../../../redux/reducers/ActionCreators";
 import { useNavigate } from "react-router";
+import { logoutUser } from "../../../redux/actions/AuthActions";
 
 const UserActionButtons = () => {
   const dispatch = useAppDispatch();

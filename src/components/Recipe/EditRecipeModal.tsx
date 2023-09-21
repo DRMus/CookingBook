@@ -1,11 +1,11 @@
 import { message, Form, Button, Modal } from "antd";
 import { ICreateRecipe } from "../../interfaces/IRecipe";
-import { fetchOneRecipe } from "../../redux/reducers/ActionCreators";
 import { useAppDispatch, useAppSelector } from "../../utils/hooks/useAppDispatch";
 import { makeRecipeRequestData } from "../../utils/makeRecipeRequestData";
 import { useMemo, useState } from "react";
 import RecipeForm from "../common/RecipeForm/RecipeForm";
 import { updateRecipe } from "../../utils/api/updateRecipe";
+import { fetchOneRecipe } from "../../redux/actions/SelectedRecipeActions";
 
 interface Props {
   recipeId: number;

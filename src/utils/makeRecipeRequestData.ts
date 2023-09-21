@@ -1,5 +1,6 @@
 import { ICreateRecipe } from "../interfaces/IRecipe";
 
+/** Интерфейс отправки данных о рецепте на сервер */
 interface DtoForFormData {
   image: File | undefined;
     userId: number;
@@ -17,6 +18,7 @@ interface DtoForFormData {
     title: string;
 }
 
+/** Функция создания данных рецепта для отправления */
 export function makeRecipeRequestData(data: ICreateRecipe, userId: number) {
   const ingredients = data.ingredients.map((item, index) => {
     return {
@@ -45,14 +47,17 @@ export function makeRecipeRequestData(data: ICreateRecipe, userId: number) {
   Object.keys(dto).forEach((key) => {
     let value = dto[key as keyof DtoForFormData];
 
+    /** Если значения нет, то пропускаем данный элемент */
     if (!value) {
       return;
     }
 
+    /** Если значениие численное, то приводим его к строке*/
     if (typeof value === "number") {
       value = `${value}`
     }
 
+    /** Если значениие массив, то конвертируем его в JSON */
     if (Array.isArray(value)) {
       value = JSON.stringify(value);
     }

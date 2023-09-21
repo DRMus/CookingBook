@@ -2,12 +2,13 @@ import { RouterProvider } from "react-router-dom";
 import "./App.css";
 import routes from "./routes";
 import { useEffect } from "react";
-import { verifyUser } from "./redux/reducers/ActionCreators";
 import { useAppDispatch } from "./utils/hooks/useAppDispatch";
+import { verifyUser } from "./redux/actions/AuthActions";
 
 function App() {
   const dispatch = useAppDispatch();
 
+  /** При открытии приложения произовадится проверка авторизации */
   useEffect(() => {
     dispatch(verifyUser())
   }, [])

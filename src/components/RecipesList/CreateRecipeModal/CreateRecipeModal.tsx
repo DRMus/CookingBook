@@ -4,8 +4,8 @@ import { ICreateRecipe } from "../../../interfaces/IRecipe";
 import { makeRecipeRequestData } from "../../../utils/makeRecipeRequestData";
 import { useAppDispatch, useAppSelector } from "../../../utils/hooks/useAppDispatch";
 import { createRecipe } from "../../../utils/api/createRecipe";
-import { fetchRecipes } from "../../../redux/reducers/ActionCreators";
 import RecipeForm from "../../common/RecipeForm/RecipeForm";
+import { fetchRecipes } from "../../../redux/actions/RecipesActions";
 
 interface Props {
   isModalOpen: boolean;
@@ -21,8 +21,10 @@ const CreateRecipeModal = ({ isModalOpen, changeModalState }: Props) => {
   const onFormFinished = async (data: ICreateRecipe) => {
     if (!decodedToken) return;
 
+    /** Создаем FormData из полученных данных с формы */
     const formData = makeRecipeRequestData(data, decodedToken.id);
 
+    /** Если рецепт создан, то отображаем сообщение об успешном создании */
     const isCreated = await createRecipe(formData);
 
     if (isCreated) {

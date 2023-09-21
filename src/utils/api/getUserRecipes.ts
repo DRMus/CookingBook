@@ -2,7 +2,7 @@ import { message } from "antd";
 import axios from "../../core/axios";
 import { IRecipe } from "../../interfaces/IRecipe";
 
-
+/** Получение рецептов пользователя */
 export async function getUserRecipes(userId: number, token: string) {
   try {
     const recipes = await axios.get<IRecipe[]>(`/users/recipes/${userId}`, {

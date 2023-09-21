@@ -5,9 +5,10 @@ import RecipesTable from "../common/RecipesTable";
 import { useEffect, useState } from "react";
 import classNames from "classnames";
 import { useAppDispatch, useAppSelector } from "../../utils/hooks/useAppDispatch";
-import { fetchIngredients, fetchRecipes } from "../../redux/reducers/ActionCreators";
 import AddRecipeButton from "./AddRecipeButton";
 import FiltersForm from "./FiltersForm";
+import { fetchIngredients } from "../../redux/actions/IngredientsActions";
+import { fetchRecipes } from "../../redux/actions/RecipesActions";
 
 import "./RecipesList.scss";
 
@@ -23,10 +24,14 @@ const RecipesList = () => {
   const [isSiderBrokeen, setIsSiderBrokeen] = useState<boolean>(false);
   const [isCollapsed, setIsCollapsed] = useState<boolean>(false);
 
+  /** Немного адаптивности. 
+   *  Скрывает фильтры, если размер экрана меньше 992px
+   */
   const onBreakpoint = (brokeen: boolean) => {
     setIsSiderBrokeen(brokeen);
   };
 
+  /** При первом рендере получаем списки ингредиентов и рецептов */
   useEffect(() => {
     dispatch(fetchIngredients());
     dispatch(fetchRecipes());

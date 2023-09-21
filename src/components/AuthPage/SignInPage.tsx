@@ -1,11 +1,11 @@
 import { useEffect } from "react";
-import { AntFormFieldsFailed, AuthFormValues } from "../../interfaces";
-import { loginUser } from "../../redux/reducers/ActionCreators";
+import { AuthFormValues } from "../../interfaces";
 import { useAppDispatch, useAppSelector } from "../../utils/hooks/useAppDispatch";
 import AuthForm from "./AuthForm";
 import { useLocation, useNavigate } from "react-router";
 import { message } from "antd";
 import { authSlice } from "../../redux/reducers/AuthSlice";
+import { loginUser } from "../../redux/actions/AuthActions";
 
 const SignInPage = () => {
   const navigate = useNavigate();
@@ -19,10 +19,6 @@ const SignInPage = () => {
   const onFinish = (data: AuthFormValues) => {
     dispatch(loginUser(data));
     console.log("Done: ", data);
-  };
-
-  const onFinishFailed = (data: AntFormFieldsFailed<AuthFormValues>) => {
-    console.log("Failed: ", data);
   };
 
   const redirectToHomePage = () => {
@@ -49,7 +45,6 @@ const SignInPage = () => {
         title="Авторизация"
         redirectLink={{ to: "/registration", label: "Зарегистрироваться" }}
         onFinish={onFinish}
-        onFinishFailed={onFinishFailed}
       />
     </>
   );

@@ -2,17 +2,20 @@ import { UploadChangeParam, UploadFile } from "antd/es/upload";
 import { FetchingDataTemplate } from ".";
 import { IUser } from "./IUser";
 
+/** Интерфейс полученных игредиентов с сервера */
 export interface IIngredient {
   id: number;
   name: string;
 }
 
+/** Интерфейс полученных альтернативных игредиентов с сервера */
 export interface IAlternateIngredient {
   id: number;
   ingredient_id: number;
   name: string;
 }
 
+/** Интерфейс полученных рецептов с сервера */
 export interface IRecipe extends FetchingDataTemplate {
   user: IUser;
   likes: number;
@@ -25,11 +28,13 @@ export interface IRecipe extends FetchingDataTemplate {
   image?: string;
 }
 
+/** Интерфейс игредиентов для формы создания и редактирования рецептов */
 export interface ICreateRecipeIngredients {
   ingredient: string;
   alternate_ingredient: string;
 }
 
+/** Интерфейс формы для создания и редактирования рецептов */
 export interface ICreateRecipe {
   cooking_order: string;
   description?: string;

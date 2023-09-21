@@ -4,20 +4,21 @@ import { useNavigate } from "react-router";
 import { Content } from "antd/es/layout/layout";
 import { Image, Rate, Spin, Typography } from "antd";
 import { FireFilled } from "@ant-design/icons";
-
-import emptyJpg from "../../assets/empty.jpg";
-
-import "./Recipe.scss";
-import "react-quill/dist/quill.snow.css";
 import AuthUserHeart from "./AuthUserHeart";
 import NotAuthUserHeart from "./NotAuthUserHeart";
 import { useAppDispatch, useAppSelector } from "../../utils/hooks/useAppDispatch";
-import { fetchOneRecipe, fetchUserLikes } from "../../redux/reducers/ActionCreators";
 import { selectedRecipeSlice } from "../../redux/reducers/SelectedRecipeSlice";
 import { makeTagIngredients } from "../../utils/makeTagIngredients";
 import RecipeIngredientTag from "./RecipeIngredientTag";
 import { SERVER_URL } from "../../core/axios";
 import CreatorActions from "./CreatorActions";
+import { fetchOneRecipe } from "../../redux/actions/SelectedRecipeActions";
+import { fetchUserLikes } from "../../redux/actions/UserActions";
+
+import emptyJpg from "../../assets/empty.jpg";
+
+import "./Recipe.scss";
+import "react-quill/dist/quill.snow.css";
 
 const { Title, Paragraph } = Typography;
 

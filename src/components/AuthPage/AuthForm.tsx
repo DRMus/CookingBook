@@ -11,7 +11,7 @@ interface Props {
   buttonLabel: string;
   isLoading: boolean;
   onFinish: (value: AuthFormValues) => void;
-  onFinishFailed: (value: AntFormFieldsFailed<AuthFormValues>) => void;
+  onFinishFailed?: (value: AntFormFieldsFailed<AuthFormValues>) => void;
 }
 
 const AuthForm = ({
@@ -25,6 +25,10 @@ const AuthForm = ({
   const location = useLocation();
   const navigate = useNavigate();
 
+  /** Возвращение на прошлую страницу.
+   *  Получается из стейта из-за вероятности пользователя
+   *  несколько раз переходить со страницы авторизации на регистрацию
+   */
   const goBack = () => {
     navigate(location.state);
   };

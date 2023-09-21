@@ -12,6 +12,7 @@ import { IIngredient } from "../../interfaces/IRecipe";
 const { Text } = Typography;
 type RecipesFilter = (ingredientsList: IIngredient[]) => CollapseProps["items"];
 
+/** Шаблон отображения списка фильтров */
 export const recipesFilterItems: RecipesFilter = (ingredientsList) => [
   {
     key: "1",

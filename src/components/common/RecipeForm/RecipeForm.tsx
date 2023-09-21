@@ -34,6 +34,7 @@ const defaultIngredients: ICreateRecipeIngredients[] = [
 const RecipeForm = ({ form, initialValues, onFormFinished }: Props) => {
   const [imageUrl, setImageUrl] = useState<string>("");
 
+  /** Функция для отображения полученного изображения */
   const handleChangeImage: UploadProps["onChange"] = (
     info: UploadChangeParam<UploadFile>
   ) => {

@@ -2,8 +2,8 @@ import { HeartOutlined, HeartFilled } from "@ant-design/icons";
 import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../utils/hooks/useAppDispatch";
 import { addToFavoriteRecipes } from "../../utils/api/addToFavoriteRecipes";
-import { fetchUserLikes } from "../../redux/reducers/ActionCreators";
 import { deleteFromFavoriteRecipes } from "../../utils/api/deleteFromFavoriteRecipes";
+import { fetchUserLikes } from "../../redux/actions/UserActions";
 
 import "./Recipe.scss";
 
@@ -25,9 +25,12 @@ const AuthUserHeart = () => {
     if (!decodedToken || !recipe) return;
     const isDeleted = await deleteFromFavoriteRecipes(decodedToken.id, recipe.id, token);
     dispatch(fetchUserLikes(decodedToken.id, token));
+
+    /** Тут мы убираем выделение лайка, при успешном запросе, иначе оставлем лайк */
     setIsLiked(!isDeleted);
   };
 
+  /** Функция проверки, находится ли данный рецепт в избранном */
   const checkisLiked = () => {
     if (recipe && likes.includes(recipe.id.toString())) {
       setIsLiked(true);

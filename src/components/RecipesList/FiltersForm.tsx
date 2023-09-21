@@ -3,9 +3,9 @@ import { recipesFilterItems } from "./RecipesFilterItems";
 import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../utils/hooks/useAppDispatch";
 import { IFilters } from "../../interfaces";
+import { fetchRecipesWithFilters } from "../../redux/actions/RecipesActions";
 
 import "./RecipesList.scss"
-import { fetchRecipesWithFilters } from "../../redux/reducers/ActionCreators";
 
 const FiltersForm = () => {
   const dispatch = useAppDispatch();

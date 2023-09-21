@@ -1,9 +1,9 @@
 import { HeartOutlined } from "@ant-design/icons";
 import { Popover } from "antd";
-
-import "./Recipe.scss";
 import { Link } from "react-router-dom";
 import { usePathLocation } from "../../utils/hooks/usePathLocation";
+
+import "./Recipe.scss";
 
 const PopoverContent = () => {
   const pathLocation = usePathLocation();
