@@ -9,12 +9,13 @@ interface Props {
 const { Paragraph } = Typography;
 
 const RecipeIngredientTag = ({ ingredient }: Props) => {
-  if (!ingredient.altInredients) {
-    return (
-      <Tag style={{ margin: 3, cursor: "default" }}>
-        {ingredient.name}
-      </Tag>
-    );
+  /** Если альтернативных ингредиентов нет, то выводим обычный тэг*/
+  if (
+    !ingredient.altInredients ||
+    ingredient.altInredients.names.length === 0 ||
+    ingredient.altInredients.names[0] === ""
+  ) {
+    return <Tag style={{ margin: 3, cursor: "default" }}>{ingredient.name}</Tag>;
   }
 
   return (

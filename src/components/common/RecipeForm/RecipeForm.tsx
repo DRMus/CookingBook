@@ -8,6 +8,7 @@ import {
   Form,
   Typography,
   FormInstance,
+  message,
 } from "antd";
 import { UploadChangeParam, RcFile } from "antd/es/upload";
 import { useState } from "react";
@@ -33,6 +34,14 @@ const defaultIngredients: ICreateRecipeIngredients[] = [
 
 const RecipeForm = ({ form, initialValues, onFormFinished }: Props) => {
   const [imageUrl, setImageUrl] = useState<string>("");
+
+  const beforeUpload = (file: RcFile) => {
+    const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
+    if (!isJpgOrPng) {
+      message.error('Для загрузки доступны только JPG/PNG');
+    }
+    return isJpgOrPng
+  }
 
   /** Функция для отображения полученного изображения */
   const handleChangeImage: UploadProps["onChange"] = (
@@ -93,6 +102,7 @@ const RecipeForm = ({ form, initialValues, onFormFinished }: Props) => {
           listType="picture-card"
           showUploadList={false}
           action={"https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"}
+          beforeUpload={beforeUpload}
           onChange={handleChangeImage}
         >
           {imageUrl ? (

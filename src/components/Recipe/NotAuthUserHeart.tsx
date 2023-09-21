@@ -1,9 +1,13 @@
 import { HeartOutlined } from "@ant-design/icons";
-import { Popover } from "antd";
+import { Popover, Tooltip } from "antd";
 import { Link } from "react-router-dom";
 import { usePathLocation } from "../../utils/hooks/usePathLocation";
 
 import "./Recipe.scss";
+
+interface Props {
+  likesCount: number;
+}
 
 const PopoverContent = () => {
   const pathLocation = usePathLocation();
@@ -17,12 +21,14 @@ const PopoverContent = () => {
   );
 };
 
-const NotAuthUserHeart = () => {
+const NotAuthUserHeart = ({ likesCount }: Props) => {
   return (
-    <Popover content={<PopoverContent/>} trigger="click">
-      <div className="recipe-page-like">
-        <HeartOutlined />
-      </div>
+    <Popover content={<PopoverContent />} trigger="click">
+      <Tooltip title={likesCount}>
+        <div className="recipe-page-like">
+          <HeartOutlined />
+        </div>
+      </Tooltip>
     </Popover>
   );
 };

@@ -6,8 +6,13 @@ import { deleteFromFavoriteRecipes } from "../../utils/api/deleteFromFavoriteRec
 import { fetchUserLikes } from "../../redux/actions/UserActions";
 
 import "./Recipe.scss";
+import { Tooltip } from "antd";
 
-const AuthUserHeart = () => {
+interface Props {
+  likesCount: number;
+}
+
+const AuthUserHeart = ({ likesCount }: Props) => {
   const [isLiked, setIsLiked] = useState<boolean>(false);
   const dispatch = useAppDispatch();
   const { likes } = useAppSelector((state) => state.userReducer);
@@ -43,10 +48,12 @@ const AuthUserHeart = () => {
     checkisLiked();
   }, [likes]);
   return (
-    <div className="recipe-page-like">
-      {!isLiked && <HeartOutlined onClick={addToFavorite} />}
-      {isLiked && <HeartFilled className="liked" onClick={deleteFromFavorite} />}
-    </div>
+    <Tooltip title={likesCount}>
+      <div className="recipe-page-like">
+        {!isLiked && <HeartOutlined onClick={addToFavorite} />}
+        {isLiked && <HeartFilled className="liked" onClick={deleteFromFavorite} />}
+      </div>
+    </Tooltip>
   );
 };
 

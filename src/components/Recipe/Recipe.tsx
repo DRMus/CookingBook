@@ -102,8 +102,8 @@ const Recipe = () => {
           <Typography>
             <div className="recipe-page-main-content-title">
               <Title>{recipe?.title}</Title>
-              {isAuthorized && <AuthUserHeart />}
-              {!isAuthorized && <NotAuthUserHeart />}
+              {isAuthorized && <AuthUserHeart likesCount={recipe?.likes || 0}/>}
+              {!isAuthorized && <NotAuthUserHeart likesCount={recipe?.likes || 0}/>}
             </div>
 
             <Rate

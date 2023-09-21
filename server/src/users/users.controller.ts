@@ -36,23 +36,6 @@ export class UsersController {
     return res;
   }
 
-  @ApiOperation({ summary: 'Удаление одного пользователя по id' })
-  @ApiResponse({ status: 200, type: UserResponse })
-  @Delete('/:id')
-  async deleteUserById(@Param('id', ParseIntPipe) id: number) {
-    const res = await this.usersService.deleteUserById(id);
-    return res;
-  }
-
-  @ApiOperation({ summary: 'Добавления лайка рецепту' })
-  @ApiResponse({ status: 200, type: UserResponse })
-  @UseGuards(JwtAuthGuard)
-  @Post('/like/:id')
-  async addLike(@Param('id', ParseIntPipe) id: number, @Body() dto: LikeDto) {
-    const res = await this.usersService.addLikeUserById(id, dto.recipeId);
-    return res;
-  }
-
   @ApiOperation({ summary: 'Получение лайков пользователя' })
   @ApiResponse({ status: 200, type: "string" })
   @UseGuards(JwtAuthGuard)
@@ -80,6 +63,14 @@ export class UsersController {
     return res;
   }
 
+  @ApiOperation({ summary: 'Добавления лайка рецепту' })
+  @ApiResponse({ status: 200, type: UserResponse })
+  @UseGuards(JwtAuthGuard)
+  @Post('/like/:id')
+  async addLike(@Param('id', ParseIntPipe) id: number, @Body() dto: LikeDto) {
+    const res = await this.usersService.addLikeUserById(id, dto.recipeId);
+    return res;
+  }
 
   @ApiOperation({ summary: 'Удаление лайка с рецепта' })
   @ApiResponse({ status: 200, type: UserResponse })
@@ -101,5 +92,13 @@ export class UsersController {
     } catch (e) {
       makeError(e);
     }
+  }
+
+  @ApiOperation({ summary: 'Удаление одного пользователя по id' })
+  @ApiResponse({ status: 200, type: UserResponse })
+  @Delete('/:id')
+  async deleteUserById(@Param('id', ParseIntPipe) id: number) {
+    const res = await this.usersService.deleteUserById(id);
+    return res;
   }
 }
