@@ -51,6 +51,7 @@ export class IngredientsService {
      */
     let receivedIngredients: number[] = [];
     const ingredientsLength = ingredientsDto.length;
+    
     for (let i = 0; i < ingredientsLength; i++) {
       const ingredient = await this.createIngredient(ingredientsDto[i].name);
 

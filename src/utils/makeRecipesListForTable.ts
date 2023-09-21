@@ -9,7 +9,7 @@ export const makeRecipesListForTable = (recipesList: IRecipe[]): TableData[] => 
       ingredients: recipe.ingredients.map((item) => item.name),
       likes: recipe.likes,
       title: recipe.title,
-    }
-  })
-  return result
-}
+    };
+  });
+  return result;
+};

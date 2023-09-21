@@ -35,7 +35,7 @@ const AuthForm = ({
         <div className="login-page-content-title">
           <Title level={3}>{title}</Title>
         </div>
-        <Form layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form<AuthFormValues> layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
           <Form.Item
             name="username"
             label="Логин"

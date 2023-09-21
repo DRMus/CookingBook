@@ -5,6 +5,7 @@ import FavoriteRecipes from "./components/FavoriteRecipes/FavoriteRecipes";
 import Main from "./components/Main/Main";
 import Recipe from "./components/Recipe/Recipe";
 import RecipesList from "./components/RecipesList/RecipesList";
+import MyRecipes from "./components/MyRecipes/MyRecipes";
 
 const routes = createBrowserRouter(
   [
@@ -17,10 +18,11 @@ const routes = createBrowserRouter(
           element: <RecipesList />,
         },
         {
-          path: "favorite",
+          path: "favorites",
           element: <FavoriteRecipes />,
         },
         { path: "recipe", element: <Recipe /> },
+        { path: "my", element: <MyRecipes /> },
       ],
     },
     {

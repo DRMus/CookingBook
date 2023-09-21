@@ -1,0 +1,48 @@
+.create-recipe-form {
+  margin-top: 30px;
+  margin-bottom: 30px;
+
+  &-ingredients {
+    display: flex;
+
+    &-label {
+      flex: 0 0 21%;
+      text-align: end;
+      
+      &::before {
+        display: inline-block;
+        margin-inline-end: 4px;
+        color: #ff4d4f;
+        font-size: 14px;
+        font-family: SimSun, sans-serif;
+        line-height: 1;
+        content: "*";
+      }
+
+      &::after {
+        content: ":";
+        position: relative;
+        margin-block: 0;
+        margin-inline-start: 2px;
+        margin-inline-end: 8px;
+      }
+    }
+
+    &-list {
+      display: flex;
+      flex: 0 0 70.5%;
+      flex-direction: column;
+      margin-bottom: 24px;
+
+      &-item {
+        display: flex;
+        width: 100%;
+
+        & > div {
+          flex-grow: 1;
+          margin-right: 8px;
+        }
+      }
+    }
+  }
+}

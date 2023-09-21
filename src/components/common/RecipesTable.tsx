@@ -1,19 +1,14 @@
 import { Rate, Table, Tag } from "antd";
 import { ColumnsType } from "antd/es/table";
-
-import "./RecipesTable.scss";
 import { useNavigate } from "react-router";
 import { FireFilled } from "@ant-design/icons";
 import classNames from "classnames";
-import {
-  useAppDispatch,
-  useAppSelector,
-} from "../../utils/hooks/useAppDispatch";
-import { useEffect, useState } from "react";
-import { fetchRecipes } from "../../redux/reducers/ActionCreators";
+import { ReactNode, useEffect, useState } from "react";
 import { TableData } from "../../interfaces";
 import { makeRecipesListForTable } from "../../utils/makeRecipesListForTable";
+import { IRecipe } from "../../interfaces/IRecipe";
 
+import "./RecipesTable.scss";
 
 const columns: ColumnsType<TableData> = [
   {
@@ -51,39 +46,36 @@ const columns: ColumnsType<TableData> = [
 ];
 
 interface Props {
+  title?: () => ReactNode;
   isSiderBrokeen: boolean;
+  recipesList: IRecipe[];
+  isLoading: boolean;
 }
 
-const RecipesTable = ({ isSiderBrokeen }: Props) => {
+const RecipesTable = ({ title, isSiderBrokeen, recipesList, isLoading }: Props) => {
   const navigate = useNavigate();
-
-  const dispatch = useAppDispatch();
-  const { recipesList, isLoading, error } = useAppSelector((state) => state.recipesReducer);
 
   const [formatedRecipesList, setFormatedRecipesList] = useState<TableData[]>([]);
 
   const onRowSelect = (rowData: TableData) => {
     return {
       onClick: () => {
-        navigate(`recipe?id=${rowData.key}`);
+        navigate(`/recipe?id=${rowData.key}`);
       },
     };
   };
 
   useEffect(() => {
-    dispatch(fetchRecipes());
-  }, []);
-
-  useEffect(() => {
     setFormatedRecipesList(makeRecipesListForTable(recipesList));
-  }, [recipesList])
+  }, [recipesList]);
   return (
     <Table
       bordered
+      title={title}
       columns={columns}
       loading={isLoading}
       dataSource={formatedRecipesList}
-      pagination={{ pageSize: 11, position: ["bottomCenter"] }}
+      pagination={{ pageSize: 9, position: ["bottomCenter"] }}
       className={classNames("recipes-table", {
         "add-padding-left": isSiderBrokeen,
       })}

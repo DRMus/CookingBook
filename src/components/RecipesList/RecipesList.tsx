@@ -1,34 +1,27 @@
 import Sider from "antd/es/layout/Sider";
 import { Content } from "antd/es/layout/layout";
-import { Button, Collapse, Divider, Form, Input, Space } from "antd";
-import "./RecipesList.scss";
-import RecipesTable from "./RecipesTable";
+import { Divider, message } from "antd";
+import RecipesTable from "../common/RecipesTable";
 import { useEffect, useState } from "react";
 import classNames from "classnames";
 import { useAppDispatch, useAppSelector } from "../../utils/hooks/useAppDispatch";
-import { fetchIngredients } from "../../redux/reducers/ActionCreators";
-import { recipesFilterItems } from "./RecipesFilterItems";
+import { fetchIngredients, fetchRecipes } from "../../redux/reducers/ActionCreators";
 import AddRecipeButton from "./AddRecipeButton";
+import FiltersForm from "./FiltersForm";
+
+import "./RecipesList.scss";
 
 const RecipesList = () => {
   const dispatch = useAppDispatch();
   const { isAuthorized } = useAppSelector((state) => state.authReducer);
-  const { ingredientsList, isLoading } = useAppSelector(
-    (state) => state.ingredientsReducer
-  );
+  const {
+    recipesList,
+    isLoading: isRecipesLoading,
+    error,
+  } = useAppSelector((state) => state.recipesReducer);
 
   const [isSiderBrokeen, setIsSiderBrokeen] = useState<boolean>(false);
   const [isCollapsed, setIsCollapsed] = useState<boolean>(false);
-  const [isFormDirty, setIsFormDirty] = useState<boolean>(false);
-
-  const onValueChange = () => {
-    setIsFormDirty(true);
-  };
-
-  const onFormFinish = (e: any) => {
-    console.log(e);
-    setIsFormDirty(false);
-  };
 
   const onBreakpoint = (brokeen: boolean) => {
     setIsSiderBrokeen(brokeen);
@@ -36,7 +29,14 @@ const RecipesList = () => {
 
   useEffect(() => {
     dispatch(fetchIngredients());
+    dispatch(fetchRecipes());
   }, []);
+
+  useEffect(() => {
+    if (error) {
+      message.error(error);
+    }
+  }, [error]);
 
   return (
     <>
@@ -52,33 +52,18 @@ const RecipesList = () => {
         onBreakpoint={onBreakpoint}
         onCollapse={setIsCollapsed}
       >
-        <Form
-          onFinish={onFormFinish}
-          className="recipes-sider-form"
-          onValuesChange={onValueChange}
-        >
-          <div className="recipes-sider-filters">
-            <Form.Item name="search">
-              <Input placeholder="Поиск" size="large" />
-            </Form.Item>
-            <Collapse items={recipesFilterItems(ingredientsList)} />
-          </div>
-
-          {isFormDirty && (
-            <Form.Item className="recipes-sider-accept-button">
-              <Button type="primary" size="large" htmlType="submit">
-                Применить
-              </Button>
-            </Form.Item>
-          )}
-        </Form>
+        <FiltersForm />
       </Sider>
 
       {!isSiderBrokeen && <Divider type="vertical" style={{ height: "100%" }} />}
 
       <Content>
         {isAuthorized && <AddRecipeButton />}
-        <RecipesTable isSiderBrokeen={isSiderBrokeen} />
+        <RecipesTable
+          isSiderBrokeen={isSiderBrokeen}
+          isLoading={isRecipesLoading}
+          recipesList={recipesList}
+        />
       </Content>
     </>
   );

@@ -1,50 +1,66 @@
-import { Button, Form, Input, Modal, Select, Space, Typography } from "antd";
-
-import "./CreateRecipeModal.scss";
-import { useState } from "react";
+import { Button, Form, Modal, message } from "antd";
+import { useMemo } from "react";
+import { ICreateRecipe } from "../../../interfaces/IRecipe";
+import { makeRecipeRequestData } from "../../../utils/makeRecipeRequestData";
+import { useAppDispatch, useAppSelector } from "../../../utils/hooks/useAppDispatch";
+import { createRecipe } from "../../../utils/api/createRecipe";
+import { fetchRecipes } from "../../../redux/reducers/ActionCreators";
+import RecipeForm from "../../common/RecipeForm/RecipeForm";
 
 interface Props {
   isModalOpen: boolean;
   changeModalState: (state: boolean) => void;
 }
 
-const {Text} = Typography
-
 const CreateRecipeModal = ({ isModalOpen, changeModalState }: Props) => {
-  const [form] = Form.useForm();
+  const [form] = Form.useForm<ICreateRecipe>();
 
-  const [ingredientsList, setIngredientsList] = useState([
-    { ingredient: "Сахар", alternate_ingredient: "Сахар, Мука" },
-  ]);
+  const dispatch = useAppDispatch();
+  const { decodedToken } = useAppSelector((state) => state.authReducer);
+
+  const onFormFinished = async (data: ICreateRecipe) => {
+    if (!decodedToken) return;
+
+    const formData = makeRecipeRequestData(data, decodedToken.id);
+
+    const isCreated = await createRecipe(formData);
+
+    if (isCreated) {
+      message.success("Рецепт создан успешно");
+      dispatch(fetchRecipes());
+      handleCancel();
+    }
+  };
+
+  const submiteForm = () => {
+    form.submit();
+  };
 
   const handleCancel = () => {
     changeModalState(false);
   };
+
+  const footerButtons = useMemo(
+    () => [
+      <Button key="back" onClick={handleCancel}>
+        Назад
+      </Button>,
+      <Button key="submit" type="primary" onClick={submiteForm}>
+        Создать
+      </Button>,
+    ],
+    []
+  );
+
   return (
-    <Modal title="Создание рецепта" open={isModalOpen} onCancel={handleCancel}>
-      <Form form={form} onFinish={(e) => console.log(e)}>
-        <Form.List name="some" initialValue={ingredientsList}>
-          {(fileds, { remove }) => (
-            <div>
-              {fileds.map((field, index) => (
-                <Space>
-                  <Form.Item label={index + 1} key={field.key + "ing"} name={[field.name, "ingredient"]}>
-                    <Input placeholder="Название ингредиента" />
-                  </Form.Item>
-                  <Form.Item key={field.key + "altIng"} name={[field.name, "alternate_ingredient"]}>
-                    <Input placeholder="Алтернативные ингредиенты" />
-                  </Form.Item>
-                </Space>
-              ))}
-            </div>
-          )}
-        </Form.List>
-        <Form.Item>
-          <Button type="primary" htmlType="submit">
-            Ok
-          </Button>
-        </Form.Item>
-      </Form>
+    <Modal
+      title="Создание рецепта"
+      open={isModalOpen}
+      width={850}
+      onCancel={handleCancel}
+      footer={footerButtons}
+    >
+      <RecipeForm form={form} onFormFinished={onFormFinished} />
     </Modal>
   );
 };

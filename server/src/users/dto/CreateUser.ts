@@ -26,3 +26,8 @@ export class UserResponse {
   @ApiProperty()
   created_at: Date;
 }
+
+export class LikeDto {
+  @ApiProperty()
+  recipeId: number;
+}

@@ -38,3 +38,10 @@ export interface ITagIngredient {
   altInredients?: ITagAltIngredients
 }
 
+export interface IFilters {
+  ingredients?: string[],
+  rate?: [number, number],
+  search?: string
+  sortBy?: 1 | 2 | 3 | 4 | 5
+}
+

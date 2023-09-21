@@ -3,12 +3,14 @@ import { AntFormFieldsFailed, AuthFormValues } from "../../interfaces";
 import { loginUser } from "../../redux/reducers/ActionCreators";
 import { useAppDispatch, useAppSelector } from "../../utils/hooks/useAppDispatch";
 import AuthForm from "./AuthForm";
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import { message } from "antd";
 import { authSlice } from "../../redux/reducers/AuthSlice";
 
 const SignInPage = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+
   const dispatch = useAppDispatch();
   const { isAuthorized, isLoading, error } = useAppSelector(
     (state) => state.authReducer
@@ -24,7 +26,7 @@ const SignInPage = () => {
   };
 
   const redirectToHomePage = () => {
-    navigate("/");
+    navigate(location.state || "/");
   };
 
   useEffect(() => {

@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   ParseIntPipe,
@@ -9,7 +10,7 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { RecipesService } from './recipes.service';
-import { CreateRecipe } from './dto/Recipe.dto';
+import { CreateRecipe, Filters } from './dto/Recipe.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { FileInterceptor } from '@nestjs/platform-express';
 
@@ -35,5 +36,25 @@ export class RecipesController {
   @Get('/:id')
   async getOne(@Param('id', ParseIntPipe) id: number) {
     return this.recipesService.getOneRecipe(id);
+  }
+
+  @Post('update/:id')
+  @UseInterceptors(FileInterceptor('image'))
+  async update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() recipeDto: CreateRecipe,
+    @UploadedFile() image: any,
+  ) {
+    return this.recipesService.updateRecipe(id, recipeDto, image);
+  }
+
+  @Delete('delete/:id')
+  async delete(@Param('id', ParseIntPipe) id: number) {
+    return this.recipesService.deleteRecipe(id);
+  }
+
+  @Post('filter')
+  async filter(@Body() filterDto: Filters) {
+    return this.recipesService.filteredRecipes(filterDto);
   }
 }

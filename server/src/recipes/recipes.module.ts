@@ -8,6 +8,7 @@ import { IngredientsModule } from 'src/ingredients/ingredients.module';
 @Module({
   providers: [RecipesService],
   controllers: [RecipesController],
-  imports: [DatabaseModule, FilesModule, IngredientsModule]
+  imports: [DatabaseModule, FilesModule, IngredientsModule],
+  exports: [RecipesService]
 })
 export class RecipesModule {}

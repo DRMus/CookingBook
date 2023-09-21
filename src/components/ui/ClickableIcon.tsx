@@ -6,15 +6,16 @@ interface Props {
   icon: ReactNode;
   title?: string;
   size?: SizeType;
-  danger?: boolean,
-  style?: CSSProperties
+  danger?: boolean;
+  style?: CSSProperties;
+  type?: "link" | "text" | "default" | "primary" | "dashed";
   onClick?: React.MouseEventHandler<HTMLElement>;
 }
 
 const ClickableIcon = ({ title, ...props }: Props) => {
   return (
     <Tooltip title={title}>
-      <Button ghost shape="circle" size="large" {...props}/>
+      <Button ghost={props.type !== "text"} shape="circle" size="large" {...props} />
     </Tooltip>
   );
 };

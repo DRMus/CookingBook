@@ -6,7 +6,7 @@ import * as uuid from 'uuid';
 
 @Injectable()
 export class FilesService {
-  async createFile(file): Promise<string> {
+  async createFile(file: any): Promise<string> {
     try {
       const filename = uuid.v4() + '.png';
       const filepath = path.resolve(__dirname, '..', 'static');

@@ -1,5 +1,5 @@
 import axios from "../../core/axios";
-import { AuthFormValues } from "../../interfaces";
+import { AuthFormValues, IFilters } from "../../interfaces";
 import { IIngredient, IRecipe } from "../../interfaces/IRecipe";
 import { AppDispatch } from "../store";
 import { authSlice } from "./AuthSlice";
@@ -7,7 +7,7 @@ import { ingredientsSlice } from "./IngredientsSlice";
 import { recipesSlice } from "./RecipesSlice";
 import Cookies from "js-cookie";
 import { selectedRecipeSlice } from "./SelectedRecipeSlice";
-import { AxiosError } from "axios";
+import { userSlice } from "./UserSlice";
 
 export const fetchRecipes = () => async (dispatch: AppDispatch) => {
   try {
@@ -60,7 +60,7 @@ export const loginUser = (data: AuthFormValues) => async (dispatch: AppDispatch)
 export const logoutUser = () => async (dispatch: AppDispatch) => {
   Cookies.remove("token");
   dispatch(authSlice.actions.authNotAuthorizated());
-}
+};
 
 export const verifyUser = () => async (dispatch: AppDispatch) => {
   try {
@@ -87,4 +87,30 @@ export const fetchOneRecipe = (id: number) => async (dispatch: AppDispatch) => {
   } catch (e: any) {
     dispatch(selectedRecipeSlice.actions.recipeFetchingFailed(e.message));
   }
-}
+};
+
+export const fetchUserLikes =
+  (id: number, token: string) => async (dispatch: AppDispatch) => {
+    try {
+      dispatch(userSlice.actions.userLikesPending());
+      const response = await axios.get<{ likes: string }>(`/users/like/${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      const likes = response.data.likes.split(",");
+      dispatch(userSlice.actions.userLikesFetchSuccess(likes));
+    } catch (e: any) {
+      dispatch(userSlice.actions.userLikesFetchFailed(e.message));
+    }
+  };
+
+export const fetchRecipesWithFilters =
+  (filtersDto: IFilters) => async (dispatch: AppDispatch) => {
+    try {
+
+      dispatch(recipesSlice.actions.recipesFetching());
+      const response = await axios.post<IRecipe[]>("recipes/filter", filtersDto);
+      dispatch(recipesSlice.actions.recipesFetchingSuccess(response.data));
+    } catch (e: any) {
+      dispatch(recipesSlice.actions.recipesFetchingError(e.message))
+    }
+  };

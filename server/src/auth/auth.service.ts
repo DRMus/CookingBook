@@ -70,7 +70,7 @@ export class AuthService {
 
   /** Генерация токена */
   private async generateToken(user: UserResponse) {
-    const payload = { email: user.username, id: user.id, likes: user.likes };
+    const payload = { username: user.username, id: user.id, likes: user.likes };
     return {
       token: this.jwtService.sign(payload),
     };

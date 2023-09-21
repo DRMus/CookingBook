@@ -6,6 +6,8 @@ import { AuthModule } from './auth/auth.module';
 import { RecipesModule } from './recipes/recipes.module';
 import { FilesModule } from './files/files.module';
 import { IngredientsModule } from './ingredients/ingredients.module';
+import { ServeStaticModule} from "@nestjs/serve-static"
+import * as path from 'path';
 
 @Module({
   imports: [
@@ -15,6 +17,9 @@ import { IngredientsModule } from './ingredients/ingredients.module';
     RecipesModule,
     FilesModule,
     IngredientsModule,
+    ServeStaticModule.forRoot({
+      rootPath: path.resolve(__dirname, "static")
+    })
   ],
   providers: [UsersService],
 })
